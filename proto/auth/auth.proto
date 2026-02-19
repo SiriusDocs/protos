@@ -12,14 +12,10 @@ service Auth {
     //rpc GetNewTokens(TokensRequest) returns (TokenResponce);
 }
 
-message User {
+message RegisterRequest {
     string username = 1;
     string email = 2;
     string password = 3 [debug_redact = true];
-}
-
-message RegisterRequest {
-    User user = 1;
 }
 
 message RegisterResponse {
