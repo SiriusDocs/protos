@@ -9,7 +9,7 @@ option go_package = "github.com/Wolkodaf/protos/gen/go/auth;auth";
 service Auth {
     rpc Register(RegisterRequest) returns (RegisterResponse);
     rpc Login(LoginRequest) returns (LoginResponse);
-    //rpc GetNewTokens(TokensRequest) returns (TokenResponce);
+    rpc GetNewTokens(TokensRequest) returns (TokenResponce);
 }
 
 message RegisterRequest {
@@ -29,13 +29,14 @@ message LoginRequest {
 }
 
 message LoginResponse {
-  string access_token = 1;
-  string refresh_token = 2;
+    string access_token = 1;
+    string refresh_token = 2;
 }
 
-// message TokensRequest {
-
-// }
-// message TokenResponce {
-    
-// }
+message TokensRequest {
+    string refresh_token = 1;
+}
+message TokenResponce {
+    string access_token = 1;
+    string refresh_token = 2;
+}
