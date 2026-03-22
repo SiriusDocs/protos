@@ -21,3 +21,11 @@ make gen
 
 ## Публикация контрактов
 
+```bash
+git add .
+git commit -S -m "tag: ..."
+git tag vM.M.P
+
+git push origin main
+git push origin vM.M.P
+```
