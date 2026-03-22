@@ -315,8 +315,8 @@ const file_templates_temp_proto_rawDesc = "" +
 	"\x0eStatusResponse\x12\x16\n" +
 	"\x06status\x18\x01 \x01(\tR\x06status\x12\x1f\n" +
 	"\vresult_data\x18\x02 \x01(\fR\n" +
-	"resultData2\x9a\x01\n" +
-	"\x0fTemplateService\x12E\n" +
+	"resultData2\x8f\x01\n" +
+	"\x04Temp\x12E\n" +
 	"\x0eUploadAndParse\x12\x17.template.UploadRequest\x1a\x18.template.UploadResponse(\x01\x12@\n" +
 	"\vCheckStatus\x12\x17.template.StatusRequest\x1a\x18.template.StatusResponseB7Z5github.com/Wolkodaf/protos/gen/go/templates;templatesb\x06proto3"
 
@@ -342,10 +342,10 @@ var file_templates_temp_proto_goTypes = []any{
 }
 var file_templates_temp_proto_depIdxs = []int32{
 	1, // 0: template.UploadRequest.info:type_name -> template.FileInfo
-	0, // 1: template.TemplateService.UploadAndParse:input_type -> template.UploadRequest
-	3, // 2: template.TemplateService.CheckStatus:input_type -> template.StatusRequest
-	2, // 3: template.TemplateService.UploadAndParse:output_type -> template.UploadResponse
-	4, // 4: template.TemplateService.CheckStatus:output_type -> template.StatusResponse
+	0, // 1: template.Temp.UploadAndParse:input_type -> template.UploadRequest
+	3, // 2: template.Temp.CheckStatus:input_type -> template.StatusRequest
+	2, // 3: template.Temp.UploadAndParse:output_type -> template.UploadResponse
+	4, // 4: template.Temp.CheckStatus:output_type -> template.StatusResponse
 	3, // [3:5] is the sub-list for method output_type
 	1, // [1:3] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name

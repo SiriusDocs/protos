@@ -19,30 +19,30 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	TemplateService_UploadAndParse_FullMethodName = "/template.TemplateService/UploadAndParse"
-	TemplateService_CheckStatus_FullMethodName    = "/template.TemplateService/CheckStatus"
+	Temp_UploadAndParse_FullMethodName = "/template.Temp/UploadAndParse"
+	Temp_CheckStatus_FullMethodName    = "/template.Temp/CheckStatus"
 )
 
-// TemplateServiceClient is the client API for TemplateService service.
+// TempClient is the client API for Temp service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type TemplateServiceClient interface {
+type TempClient interface {
 	UploadAndParse(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[UploadRequest, UploadResponse], error)
 	// Метод для проверки статуса
 	CheckStatus(ctx context.Context, in *StatusRequest, opts ...grpc.CallOption) (*StatusResponse, error)
 }
 
-type templateServiceClient struct {
+type tempClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewTemplateServiceClient(cc grpc.ClientConnInterface) TemplateServiceClient {
-	return &templateServiceClient{cc}
+func NewTempClient(cc grpc.ClientConnInterface) TempClient {
+	return &tempClient{cc}
 }
 
-func (c *templateServiceClient) UploadAndParse(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[UploadRequest, UploadResponse], error) {
+func (c *tempClient) UploadAndParse(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[UploadRequest, UploadResponse], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &TemplateService_ServiceDesc.Streams[0], TemplateService_UploadAndParse_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &Temp_ServiceDesc.Streams[0], Temp_UploadAndParse_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -51,103 +51,103 @@ func (c *templateServiceClient) UploadAndParse(ctx context.Context, opts ...grpc
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type TemplateService_UploadAndParseClient = grpc.ClientStreamingClient[UploadRequest, UploadResponse]
+type Temp_UploadAndParseClient = grpc.ClientStreamingClient[UploadRequest, UploadResponse]
 
-func (c *templateServiceClient) CheckStatus(ctx context.Context, in *StatusRequest, opts ...grpc.CallOption) (*StatusResponse, error) {
+func (c *tempClient) CheckStatus(ctx context.Context, in *StatusRequest, opts ...grpc.CallOption) (*StatusResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(StatusResponse)
-	err := c.cc.Invoke(ctx, TemplateService_CheckStatus_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Temp_CheckStatus_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// TemplateServiceServer is the server API for TemplateService service.
-// All implementations must embed UnimplementedTemplateServiceServer
+// TempServer is the server API for Temp service.
+// All implementations must embed UnimplementedTempServer
 // for forward compatibility.
-type TemplateServiceServer interface {
+type TempServer interface {
 	UploadAndParse(grpc.ClientStreamingServer[UploadRequest, UploadResponse]) error
 	// Метод для проверки статуса
 	CheckStatus(context.Context, *StatusRequest) (*StatusResponse, error)
-	mustEmbedUnimplementedTemplateServiceServer()
+	mustEmbedUnimplementedTempServer()
 }
 
-// UnimplementedTemplateServiceServer must be embedded to have
+// UnimplementedTempServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedTemplateServiceServer struct{}
+type UnimplementedTempServer struct{}
 
-func (UnimplementedTemplateServiceServer) UploadAndParse(grpc.ClientStreamingServer[UploadRequest, UploadResponse]) error {
+func (UnimplementedTempServer) UploadAndParse(grpc.ClientStreamingServer[UploadRequest, UploadResponse]) error {
 	return status.Error(codes.Unimplemented, "method UploadAndParse not implemented")
 }
-func (UnimplementedTemplateServiceServer) CheckStatus(context.Context, *StatusRequest) (*StatusResponse, error) {
+func (UnimplementedTempServer) CheckStatus(context.Context, *StatusRequest) (*StatusResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method CheckStatus not implemented")
 }
-func (UnimplementedTemplateServiceServer) mustEmbedUnimplementedTemplateServiceServer() {}
-func (UnimplementedTemplateServiceServer) testEmbeddedByValue()                         {}
+func (UnimplementedTempServer) mustEmbedUnimplementedTempServer() {}
+func (UnimplementedTempServer) testEmbeddedByValue()              {}
 
-// UnsafeTemplateServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to TemplateServiceServer will
+// UnsafeTempServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to TempServer will
 // result in compilation errors.
-type UnsafeTemplateServiceServer interface {
-	mustEmbedUnimplementedTemplateServiceServer()
+type UnsafeTempServer interface {
+	mustEmbedUnimplementedTempServer()
 }
 
-func RegisterTemplateServiceServer(s grpc.ServiceRegistrar, srv TemplateServiceServer) {
-	// If the following call panics, it indicates UnimplementedTemplateServiceServer was
+func RegisterTempServer(s grpc.ServiceRegistrar, srv TempServer) {
+	// If the following call panics, it indicates UnimplementedTempServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&TemplateService_ServiceDesc, srv)
+	s.RegisterService(&Temp_ServiceDesc, srv)
 }
 
-func _TemplateService_UploadAndParse_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(TemplateServiceServer).UploadAndParse(&grpc.GenericServerStream[UploadRequest, UploadResponse]{ServerStream: stream})
+func _Temp_UploadAndParse_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(TempServer).UploadAndParse(&grpc.GenericServerStream[UploadRequest, UploadResponse]{ServerStream: stream})
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type TemplateService_UploadAndParseServer = grpc.ClientStreamingServer[UploadRequest, UploadResponse]
+type Temp_UploadAndParseServer = grpc.ClientStreamingServer[UploadRequest, UploadResponse]
 
-func _TemplateService_CheckStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Temp_CheckStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StatusRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TemplateServiceServer).CheckStatus(ctx, in)
+		return srv.(TempServer).CheckStatus(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TemplateService_CheckStatus_FullMethodName,
+		FullMethod: Temp_CheckStatus_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TemplateServiceServer).CheckStatus(ctx, req.(*StatusRequest))
+		return srv.(TempServer).CheckStatus(ctx, req.(*StatusRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// TemplateService_ServiceDesc is the grpc.ServiceDesc for TemplateService service.
+// Temp_ServiceDesc is the grpc.ServiceDesc for Temp service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var TemplateService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "template.TemplateService",
-	HandlerType: (*TemplateServiceServer)(nil),
+var Temp_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "template.Temp",
+	HandlerType: (*TempServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "CheckStatus",
-			Handler:    _TemplateService_CheckStatus_Handler,
+			Handler:    _Temp_CheckStatus_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "UploadAndParse",
-			Handler:       _TemplateService_UploadAndParse_Handler,
+			Handler:       _Temp_UploadAndParse_Handler,
 			ClientStreams: true,
 		},
 	},

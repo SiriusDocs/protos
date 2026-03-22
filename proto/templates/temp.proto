@@ -4,7 +4,7 @@ package template;
 
 option go_package = "github.com/Wolkodaf/protos/gen/go/templates;templates";
 
-service TemplateService {
+service Temp {
   rpc UploadAndParse (stream UploadRequest) returns (UploadResponse);
   // Метод для проверки статуса
   rpc CheckStatus (StatusRequest) returns (StatusResponse);
