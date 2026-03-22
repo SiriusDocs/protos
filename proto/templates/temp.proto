@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package template;
+
+option go_package = "github.com/Wolkodaf/protos/gen/go/templates;templates";
+
+service TemplateService {
+  rpc UploadAndParse (stream UploadRequest) returns (UploadResponse);
+  // Метод для проверки статуса
+  rpc CheckStatus (StatusRequest) returns (StatusResponse);
+}
+
+message UploadRequest {
+  oneof data {
+    FileInfo info = 1; // Метаданные (имя файла, тип) - отправляем первым сообщением
+    bytes chunk_data = 2; // Кусочки файла
+  }
+}
+
+message FileInfo {
+  string filename = 1;
+  string content_type = 2;
+}
+
+message UploadResponse {
+  string task_id = 1; // ID, по которому будем проверять статус
+}
+
+message StatusRequest {
+  string task_id = 1;
+}
+
+message StatusResponse {
+  string status = 1; // "processing", "done", "error"
+  bytes result_data = 2; // Результат парсинга, если готово
+}
