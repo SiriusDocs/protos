@@ -6,13 +6,12 @@ option go_package = "github.com/Wolkodaf/protos/gen/go/templates;templates";
 
 service Temp {
   rpc UploadAndParse (stream UploadRequest) returns (UploadResponse);
-  // Метод для проверки статуса
   rpc CheckStatus (StatusRequest) returns (StatusResponse);
 }
 
 message UploadRequest {
   oneof data {
-    FileInfo info = 1; // Метаданные (имя файла, тип) - отправляем первым сообщением
+    FileInfo info = 1; // Метаданные (имя файла, тип)
     bytes chunk_data = 2; // Кусочки файла
   }
 }
@@ -31,6 +30,7 @@ message StatusRequest {
 }
 
 message StatusResponse {
-  string status = 1; // "processing", "done", "error"
-  bytes result_data = 2; // Результат парсинга, если готово
+  string status = 1;  // "pending", "processing", "done", "error"
+  repeated string names = 2;
+  string error_message = 3;
 }

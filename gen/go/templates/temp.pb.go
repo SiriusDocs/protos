@@ -92,7 +92,7 @@ type isUploadRequest_Data interface {
 }
 
 type UploadRequest_Info struct {
-	Info *FileInfo `protobuf:"bytes,1,opt,name=info,proto3,oneof"` // Метаданные (имя файла, тип) - отправляем первым сообщением
+	Info *FileInfo `protobuf:"bytes,1,opt,name=info,proto3,oneof"` // Метаданные (имя файла, тип)
 }
 
 type UploadRequest_ChunkData struct {
@@ -245,8 +245,9 @@ func (x *StatusRequest) GetTaskId() string {
 
 type StatusResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Status        string                 `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`                           // "processing", "done", "error"
-	ResultData    []byte                 `protobuf:"bytes,2,opt,name=result_data,json=resultData,proto3" json:"result_data,omitempty"` // Результат парсинга, если готово
+	Status        string                 `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"` // "pending", "processing", "done", "error"
+	Names         []string               `protobuf:"bytes,2,rep,name=names,proto3" json:"names,omitempty"`
+	ErrorMessage  string                 `protobuf:"bytes,3,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -288,11 +289,18 @@ func (x *StatusResponse) GetStatus() string {
 	return ""
 }
 
-func (x *StatusResponse) GetResultData() []byte {
+func (x *StatusResponse) GetNames() []string {
 	if x != nil {
-		return x.ResultData
+		return x.Names
 	}
 	return nil
+}
+
+func (x *StatusResponse) GetErrorMessage() string {
+	if x != nil {
+		return x.ErrorMessage
+	}
+	return ""
 }
 
 var File_templates_temp_proto protoreflect.FileDescriptor
@@ -311,11 +319,11 @@ const file_templates_temp_proto_rawDesc = "" +
 	"\x0eUploadResponse\x12\x17\n" +
 	"\atask_id\x18\x01 \x01(\tR\x06taskId\"(\n" +
 	"\rStatusRequest\x12\x17\n" +
-	"\atask_id\x18\x01 \x01(\tR\x06taskId\"I\n" +
+	"\atask_id\x18\x01 \x01(\tR\x06taskId\"c\n" +
 	"\x0eStatusResponse\x12\x16\n" +
-	"\x06status\x18\x01 \x01(\tR\x06status\x12\x1f\n" +
-	"\vresult_data\x18\x02 \x01(\fR\n" +
-	"resultData2\x8f\x01\n" +
+	"\x06status\x18\x01 \x01(\tR\x06status\x12\x14\n" +
+	"\x05names\x18\x02 \x03(\tR\x05names\x12#\n" +
+	"\rerror_message\x18\x03 \x01(\tR\ferrorMessage2\x8f\x01\n" +
 	"\x04Temp\x12E\n" +
 	"\x0eUploadAndParse\x12\x17.template.UploadRequest\x1a\x18.template.UploadResponse(\x01\x12@\n" +
 	"\vCheckStatus\x12\x17.template.StatusRequest\x1a\x18.template.StatusResponseB7Z5github.com/Wolkodaf/protos/gen/go/templates;templatesb\x06proto3"

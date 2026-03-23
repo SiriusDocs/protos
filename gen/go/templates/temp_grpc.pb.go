@@ -28,7 +28,6 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TempClient interface {
 	UploadAndParse(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[UploadRequest, UploadResponse], error)
-	// Метод для проверки статуса
 	CheckStatus(ctx context.Context, in *StatusRequest, opts ...grpc.CallOption) (*StatusResponse, error)
 }
 
@@ -68,7 +67,6 @@ func (c *tempClient) CheckStatus(ctx context.Context, in *StatusRequest, opts ..
 // for forward compatibility.
 type TempServer interface {
 	UploadAndParse(grpc.ClientStreamingServer[UploadRequest, UploadResponse]) error
-	// Метод для проверки статуса
 	CheckStatus(context.Context, *StatusRequest) (*StatusResponse, error)
 	mustEmbedUnimplementedTempServer()
 }
