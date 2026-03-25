@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Temp_UploadAndParse_FullMethodName = "/template.Temp/UploadAndParse"
-	Temp_CheckStatus_FullMethodName    = "/template.Temp/CheckStatus"
+	Temp_UploadAndParse_FullMethodName       = "/template.Temp/UploadAndParse"
+	Temp_CheckStatus_FullMethodName          = "/template.Temp/CheckStatus"
+	Temp_CreateTemplateParams_FullMethodName = "/template.Temp/CreateTemplateParams"
 )
 
 // TempClient is the client API for Temp service.
@@ -29,6 +30,7 @@ const (
 type TempClient interface {
 	UploadAndParse(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[UploadRequest, UploadResponse], error)
 	CheckStatus(ctx context.Context, in *StatusRequest, opts ...grpc.CallOption) (*StatusResponse, error)
+	CreateTemplateParams(ctx context.Context, in *CreateParamsRequest, opts ...grpc.CallOption) (*CreateParamsResponse, error)
 }
 
 type tempClient struct {
@@ -62,12 +64,23 @@ func (c *tempClient) CheckStatus(ctx context.Context, in *StatusRequest, opts ..
 	return out, nil
 }
 
+func (c *tempClient) CreateTemplateParams(ctx context.Context, in *CreateParamsRequest, opts ...grpc.CallOption) (*CreateParamsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateParamsResponse)
+	err := c.cc.Invoke(ctx, Temp_CreateTemplateParams_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TempServer is the server API for Temp service.
 // All implementations must embed UnimplementedTempServer
 // for forward compatibility.
 type TempServer interface {
 	UploadAndParse(grpc.ClientStreamingServer[UploadRequest, UploadResponse]) error
 	CheckStatus(context.Context, *StatusRequest) (*StatusResponse, error)
+	CreateTemplateParams(context.Context, *CreateParamsRequest) (*CreateParamsResponse, error)
 	mustEmbedUnimplementedTempServer()
 }
 
@@ -83,6 +96,9 @@ func (UnimplementedTempServer) UploadAndParse(grpc.ClientStreamingServer[UploadR
 }
 func (UnimplementedTempServer) CheckStatus(context.Context, *StatusRequest) (*StatusResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method CheckStatus not implemented")
+}
+func (UnimplementedTempServer) CreateTemplateParams(context.Context, *CreateParamsRequest) (*CreateParamsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateTemplateParams not implemented")
 }
 func (UnimplementedTempServer) mustEmbedUnimplementedTempServer() {}
 func (UnimplementedTempServer) testEmbeddedByValue()              {}
@@ -130,6 +146,24 @@ func _Temp_CheckStatus_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Temp_CreateTemplateParams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateParamsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TempServer).CreateTemplateParams(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Temp_CreateTemplateParams_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TempServer).CreateTemplateParams(ctx, req.(*CreateParamsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Temp_ServiceDesc is the grpc.ServiceDesc for Temp service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -140,6 +174,10 @@ var Temp_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CheckStatus",
 			Handler:    _Temp_CheckStatus_Handler,
+		},
+		{
+			MethodName: "CreateTemplateParams",
+			Handler:    _Temp_CreateTemplateParams_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

@@ -303,6 +303,110 @@ func (x *StatusResponse) GetErrorMessage() string {
 	return ""
 }
 
+type CreateParamsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TaskId        string                 `protobuf:"bytes,1,opt,name=task_id,json=taskId,proto3" json:"task_id,omitempty"`
+	Params        map[string]string      `protobuf:"bytes,2,rep,name=params,proto3" json:"params,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateParamsRequest) Reset() {
+	*x = CreateParamsRequest{}
+	mi := &file_templates_temp_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateParamsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateParamsRequest) ProtoMessage() {}
+
+func (x *CreateParamsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_templates_temp_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateParamsRequest.ProtoReflect.Descriptor instead.
+func (*CreateParamsRequest) Descriptor() ([]byte, []int) {
+	return file_templates_temp_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *CreateParamsRequest) GetTaskId() string {
+	if x != nil {
+		return x.TaskId
+	}
+	return ""
+}
+
+func (x *CreateParamsRequest) GetParams() map[string]string {
+	if x != nil {
+		return x.Params
+	}
+	return nil
+}
+
+type CreateParamsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TemplateId    string                 `protobuf:"bytes,1,opt,name=template_id,json=templateId,proto3" json:"template_id,omitempty"`
+	Error         string                 `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateParamsResponse) Reset() {
+	*x = CreateParamsResponse{}
+	mi := &file_templates_temp_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateParamsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateParamsResponse) ProtoMessage() {}
+
+func (x *CreateParamsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_templates_temp_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateParamsResponse.ProtoReflect.Descriptor instead.
+func (*CreateParamsResponse) Descriptor() ([]byte, []int) {
+	return file_templates_temp_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *CreateParamsResponse) GetTemplateId() string {
+	if x != nil {
+		return x.TemplateId
+	}
+	return ""
+}
+
+func (x *CreateParamsResponse) GetError() string {
+	if x != nil {
+		return x.Error
+	}
+	return ""
+}
+
 var File_templates_temp_proto protoreflect.FileDescriptor
 
 const file_templates_temp_proto_rawDesc = "" +
@@ -323,10 +427,21 @@ const file_templates_temp_proto_rawDesc = "" +
 	"\x0eStatusResponse\x12\x16\n" +
 	"\x06status\x18\x01 \x01(\tR\x06status\x12\x14\n" +
 	"\x05names\x18\x02 \x03(\tR\x05names\x12#\n" +
-	"\rerror_message\x18\x03 \x01(\tR\ferrorMessage2\x8f\x01\n" +
+	"\rerror_message\x18\x03 \x01(\tR\ferrorMessage\"\xac\x01\n" +
+	"\x13CreateParamsRequest\x12\x17\n" +
+	"\atask_id\x18\x01 \x01(\tR\x06taskId\x12A\n" +
+	"\x06params\x18\x02 \x03(\v2).template.CreateParamsRequest.ParamsEntryR\x06params\x1a9\n" +
+	"\vParamsEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"M\n" +
+	"\x14CreateParamsResponse\x12\x1f\n" +
+	"\vtemplate_id\x18\x01 \x01(\tR\n" +
+	"templateId\x12\x14\n" +
+	"\x05error\x18\x02 \x01(\tR\x05error2\xe6\x01\n" +
 	"\x04Temp\x12E\n" +
 	"\x0eUploadAndParse\x12\x17.template.UploadRequest\x1a\x18.template.UploadResponse(\x01\x12@\n" +
-	"\vCheckStatus\x12\x17.template.StatusRequest\x1a\x18.template.StatusResponseB7Z5github.com/Wolkodaf/protos/gen/go/templates;templatesb\x06proto3"
+	"\vCheckStatus\x12\x17.template.StatusRequest\x1a\x18.template.StatusResponse\x12U\n" +
+	"\x14CreateTemplateParams\x12\x1d.template.CreateParamsRequest\x1a\x1e.template.CreateParamsResponseB7Z5github.com/Wolkodaf/protos/gen/go/templates;templatesb\x06proto3"
 
 var (
 	file_templates_temp_proto_rawDescOnce sync.Once
@@ -340,25 +455,31 @@ func file_templates_temp_proto_rawDescGZIP() []byte {
 	return file_templates_temp_proto_rawDescData
 }
 
-var file_templates_temp_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_templates_temp_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_templates_temp_proto_goTypes = []any{
-	(*UploadRequest)(nil),  // 0: template.UploadRequest
-	(*FileInfo)(nil),       // 1: template.FileInfo
-	(*UploadResponse)(nil), // 2: template.UploadResponse
-	(*StatusRequest)(nil),  // 3: template.StatusRequest
-	(*StatusResponse)(nil), // 4: template.StatusResponse
+	(*UploadRequest)(nil),        // 0: template.UploadRequest
+	(*FileInfo)(nil),             // 1: template.FileInfo
+	(*UploadResponse)(nil),       // 2: template.UploadResponse
+	(*StatusRequest)(nil),        // 3: template.StatusRequest
+	(*StatusResponse)(nil),       // 4: template.StatusResponse
+	(*CreateParamsRequest)(nil),  // 5: template.CreateParamsRequest
+	(*CreateParamsResponse)(nil), // 6: template.CreateParamsResponse
+	nil,                          // 7: template.CreateParamsRequest.ParamsEntry
 }
 var file_templates_temp_proto_depIdxs = []int32{
 	1, // 0: template.UploadRequest.info:type_name -> template.FileInfo
-	0, // 1: template.Temp.UploadAndParse:input_type -> template.UploadRequest
-	3, // 2: template.Temp.CheckStatus:input_type -> template.StatusRequest
-	2, // 3: template.Temp.UploadAndParse:output_type -> template.UploadResponse
-	4, // 4: template.Temp.CheckStatus:output_type -> template.StatusResponse
-	3, // [3:5] is the sub-list for method output_type
-	1, // [1:3] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	7, // 1: template.CreateParamsRequest.params:type_name -> template.CreateParamsRequest.ParamsEntry
+	0, // 2: template.Temp.UploadAndParse:input_type -> template.UploadRequest
+	3, // 3: template.Temp.CheckStatus:input_type -> template.StatusRequest
+	5, // 4: template.Temp.CreateTemplateParams:input_type -> template.CreateParamsRequest
+	2, // 5: template.Temp.UploadAndParse:output_type -> template.UploadResponse
+	4, // 6: template.Temp.CheckStatus:output_type -> template.StatusResponse
+	6, // 7: template.Temp.CreateTemplateParams:output_type -> template.CreateParamsResponse
+	5, // [5:8] is the sub-list for method output_type
+	2, // [2:5] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_templates_temp_proto_init() }
@@ -376,7 +497,7 @@ func file_templates_temp_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_templates_temp_proto_rawDesc), len(file_templates_temp_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
