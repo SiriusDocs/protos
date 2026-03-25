@@ -7,6 +7,8 @@ option go_package = "github.com/Wolkodaf/protos/gen/go/templates;templates";
 service Temp {
   rpc UploadAndParse (stream UploadRequest) returns (UploadResponse);
   rpc CheckStatus (StatusRequest) returns (StatusResponse);
+
+  rpc CreateTemplateParams (CreateParamsRequest) returns (CreateParamsResponse);
 }
 
 message UploadRequest {
@@ -33,4 +35,14 @@ message StatusResponse {
   string status = 1;  // "pending", "processing", "done", "error"
   repeated string names = 2;
   string error_message = 3;
+}
+
+message CreateParamsRequest {
+  string task_id = 1;
+  map<string, string> params = 2; 
+}
+
+message CreateParamsResponse {
+  string template_id = 1;
+  string error = 2;
 }
