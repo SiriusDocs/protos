@@ -358,7 +358,6 @@ func (x *CreateParamsRequest) GetParams() map[string]string {
 type CreateParamsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TemplateId    string                 `protobuf:"bytes,1,opt,name=template_id,json=templateId,proto3" json:"template_id,omitempty"`
-	Error         string                 `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -400,13 +399,6 @@ func (x *CreateParamsResponse) GetTemplateId() string {
 	return ""
 }
 
-func (x *CreateParamsResponse) GetError() string {
-	if x != nil {
-		return x.Error
-	}
-	return ""
-}
-
 var File_templates_temp_proto protoreflect.FileDescriptor
 
 const file_templates_temp_proto_rawDesc = "" +
@@ -433,11 +425,10 @@ const file_templates_temp_proto_rawDesc = "" +
 	"\x06params\x18\x02 \x03(\v2).template.CreateParamsRequest.ParamsEntryR\x06params\x1a9\n" +
 	"\vParamsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"M\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"7\n" +
 	"\x14CreateParamsResponse\x12\x1f\n" +
 	"\vtemplate_id\x18\x01 \x01(\tR\n" +
-	"templateId\x12\x14\n" +
-	"\x05error\x18\x02 \x01(\tR\x05error2\xe6\x01\n" +
+	"templateId2\xe6\x01\n" +
 	"\x04Temp\x12E\n" +
 	"\x0eUploadAndParse\x12\x17.template.UploadRequest\x1a\x18.template.UploadResponse(\x01\x12@\n" +
 	"\vCheckStatus\x12\x17.template.StatusRequest\x1a\x18.template.StatusResponse\x12U\n" +
