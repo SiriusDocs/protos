@@ -25,7 +25,6 @@ const (
 	Auth_GetProfile_FullMethodName       = "/auth.Auth/GetProfile"
 	Auth_ListPendingUsers_FullMethodName = "/auth.Auth/ListPendingUsers"
 	Auth_AssignRole_FullMethodName       = "/auth.Auth/AssignRole"
-	Auth_Test_FullMethodName             = "/auth.Auth/Test"
 )
 
 // AuthClient is the client API for Auth service.
@@ -40,7 +39,6 @@ type AuthClient interface {
 	// Админские ручки
 	ListPendingUsers(ctx context.Context, in *ListPendingUsersRequest, opts ...grpc.CallOption) (*ListPendingUsersResponse, error)
 	AssignRole(ctx context.Context, in *AssignRoleRequest, opts ...grpc.CallOption) (*AssignRoleResponse, error)
-	Test(ctx context.Context, in *TestRequest, opts ...grpc.CallOption) (*TestResponse, error)
 }
 
 type authClient struct {
@@ -111,16 +109,6 @@ func (c *authClient) AssignRole(ctx context.Context, in *AssignRoleRequest, opts
 	return out, nil
 }
 
-func (c *authClient) Test(ctx context.Context, in *TestRequest, opts ...grpc.CallOption) (*TestResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(TestResponse)
-	err := c.cc.Invoke(ctx, Auth_Test_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // AuthServer is the server API for Auth service.
 // All implementations must embed UnimplementedAuthServer
 // for forward compatibility.
@@ -133,7 +121,6 @@ type AuthServer interface {
 	// Админские ручки
 	ListPendingUsers(context.Context, *ListPendingUsersRequest) (*ListPendingUsersResponse, error)
 	AssignRole(context.Context, *AssignRoleRequest) (*AssignRoleResponse, error)
-	Test(context.Context, *TestRequest) (*TestResponse, error)
 	mustEmbedUnimplementedAuthServer()
 }
 
@@ -161,9 +148,6 @@ func (UnimplementedAuthServer) ListPendingUsers(context.Context, *ListPendingUse
 }
 func (UnimplementedAuthServer) AssignRole(context.Context, *AssignRoleRequest) (*AssignRoleResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method AssignRole not implemented")
-}
-func (UnimplementedAuthServer) Test(context.Context, *TestRequest) (*TestResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Test not implemented")
 }
 func (UnimplementedAuthServer) mustEmbedUnimplementedAuthServer() {}
 func (UnimplementedAuthServer) testEmbeddedByValue()              {}
@@ -294,24 +278,6 @@ func _Auth_AssignRole_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Auth_Test_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TestRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AuthServer).Test(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Auth_Test_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).Test(ctx, req.(*TestRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // Auth_ServiceDesc is the grpc.ServiceDesc for Auth service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -342,10 +308,6 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AssignRole",
 			Handler:    _Auth_AssignRole_Handler,
-		},
-		{
-			MethodName: "Test",
-			Handler:    _Auth_Test_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
