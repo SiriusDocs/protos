@@ -11,4 +11,3 @@ gen: clean
 .PHONY: clean
 clean:
 	rm -rf gen/go/*
-

@@ -17,6 +17,15 @@ service Auth {
     // Админские ручки
     rpc ListPendingUsers(ListPendingUsersRequest) returns (ListPendingUsersResponse);
     rpc AssignRole(AssignRoleRequest) returns (AssignRoleResponse);
+    rpc Test(TestRequest) returns (TestResponse);
+}
+
+message TestRequest {
+    string test = 1;
+}
+
+message TestResponse {
+    string test = 1;
 }
 
 // --- AUTH MESSAGES ---

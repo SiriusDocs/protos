@@ -19,9 +19,13 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Auth_Register_FullMethodName     = "/auth.Auth/Register"
-	Auth_Login_FullMethodName        = "/auth.Auth/Login"
-	Auth_GetNewTokens_FullMethodName = "/auth.Auth/GetNewTokens"
+	Auth_Register_FullMethodName         = "/auth.Auth/Register"
+	Auth_Login_FullMethodName            = "/auth.Auth/Login"
+	Auth_GetNewTokens_FullMethodName     = "/auth.Auth/GetNewTokens"
+	Auth_GetProfile_FullMethodName       = "/auth.Auth/GetProfile"
+	Auth_ListPendingUsers_FullMethodName = "/auth.Auth/ListPendingUsers"
+	Auth_AssignRole_FullMethodName       = "/auth.Auth/AssignRole"
+	Auth_Test_FullMethodName             = "/auth.Auth/Test"
 )
 
 // AuthClient is the client API for Auth service.
@@ -30,7 +34,13 @@ const (
 type AuthClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
-	GetNewTokens(ctx context.Context, in *TokensRequest, opts ...grpc.CallOption) (*TokenResponce, error)
+	GetNewTokens(ctx context.Context, in *TokensRequest, opts ...grpc.CallOption) (*TokenResponse, error)
+	// Профиль пользователя
+	GetProfile(ctx context.Context, in *GetProfileRequest, opts ...grpc.CallOption) (*GetProfileResponse, error)
+	// Админские ручки
+	ListPendingUsers(ctx context.Context, in *ListPendingUsersRequest, opts ...grpc.CallOption) (*ListPendingUsersResponse, error)
+	AssignRole(ctx context.Context, in *AssignRoleRequest, opts ...grpc.CallOption) (*AssignRoleResponse, error)
+	Test(ctx context.Context, in *TestRequest, opts ...grpc.CallOption) (*TestResponse, error)
 }
 
 type authClient struct {
@@ -61,10 +71,50 @@ func (c *authClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.C
 	return out, nil
 }
 
-func (c *authClient) GetNewTokens(ctx context.Context, in *TokensRequest, opts ...grpc.CallOption) (*TokenResponce, error) {
+func (c *authClient) GetNewTokens(ctx context.Context, in *TokensRequest, opts ...grpc.CallOption) (*TokenResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(TokenResponce)
+	out := new(TokenResponse)
 	err := c.cc.Invoke(ctx, Auth_GetNewTokens_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authClient) GetProfile(ctx context.Context, in *GetProfileRequest, opts ...grpc.CallOption) (*GetProfileResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetProfileResponse)
+	err := c.cc.Invoke(ctx, Auth_GetProfile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authClient) ListPendingUsers(ctx context.Context, in *ListPendingUsersRequest, opts ...grpc.CallOption) (*ListPendingUsersResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListPendingUsersResponse)
+	err := c.cc.Invoke(ctx, Auth_ListPendingUsers_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authClient) AssignRole(ctx context.Context, in *AssignRoleRequest, opts ...grpc.CallOption) (*AssignRoleResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AssignRoleResponse)
+	err := c.cc.Invoke(ctx, Auth_AssignRole_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authClient) Test(ctx context.Context, in *TestRequest, opts ...grpc.CallOption) (*TestResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TestResponse)
+	err := c.cc.Invoke(ctx, Auth_Test_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +127,13 @@ func (c *authClient) GetNewTokens(ctx context.Context, in *TokensRequest, opts .
 type AuthServer interface {
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
-	GetNewTokens(context.Context, *TokensRequest) (*TokenResponce, error)
+	GetNewTokens(context.Context, *TokensRequest) (*TokenResponse, error)
+	// Профиль пользователя
+	GetProfile(context.Context, *GetProfileRequest) (*GetProfileResponse, error)
+	// Админские ручки
+	ListPendingUsers(context.Context, *ListPendingUsersRequest) (*ListPendingUsersResponse, error)
+	AssignRole(context.Context, *AssignRoleRequest) (*AssignRoleResponse, error)
+	Test(context.Context, *TestRequest) (*TestResponse, error)
 	mustEmbedUnimplementedAuthServer()
 }
 
@@ -94,8 +150,20 @@ func (UnimplementedAuthServer) Register(context.Context, *RegisterRequest) (*Reg
 func (UnimplementedAuthServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Login not implemented")
 }
-func (UnimplementedAuthServer) GetNewTokens(context.Context, *TokensRequest) (*TokenResponce, error) {
+func (UnimplementedAuthServer) GetNewTokens(context.Context, *TokensRequest) (*TokenResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetNewTokens not implemented")
+}
+func (UnimplementedAuthServer) GetProfile(context.Context, *GetProfileRequest) (*GetProfileResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetProfile not implemented")
+}
+func (UnimplementedAuthServer) ListPendingUsers(context.Context, *ListPendingUsersRequest) (*ListPendingUsersResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListPendingUsers not implemented")
+}
+func (UnimplementedAuthServer) AssignRole(context.Context, *AssignRoleRequest) (*AssignRoleResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method AssignRole not implemented")
+}
+func (UnimplementedAuthServer) Test(context.Context, *TestRequest) (*TestResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Test not implemented")
 }
 func (UnimplementedAuthServer) mustEmbedUnimplementedAuthServer() {}
 func (UnimplementedAuthServer) testEmbeddedByValue()              {}
@@ -172,6 +240,78 @@ func _Auth_GetNewTokens_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Auth_GetProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServer).GetProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Auth_GetProfile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServer).GetProfile(ctx, req.(*GetProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Auth_ListPendingUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPendingUsersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServer).ListPendingUsers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Auth_ListPendingUsers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServer).ListPendingUsers(ctx, req.(*ListPendingUsersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Auth_AssignRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AssignRoleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServer).AssignRole(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Auth_AssignRole_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServer).AssignRole(ctx, req.(*AssignRoleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Auth_Test_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TestRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServer).Test(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Auth_Test_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServer).Test(ctx, req.(*TestRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Auth_ServiceDesc is the grpc.ServiceDesc for Auth service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -190,6 +330,22 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetNewTokens",
 			Handler:    _Auth_GetNewTokens_Handler,
+		},
+		{
+			MethodName: "GetProfile",
+			Handler:    _Auth_GetProfile_Handler,
+		},
+		{
+			MethodName: "ListPendingUsers",
+			Handler:    _Auth_ListPendingUsers_Handler,
+		},
+		{
+			MethodName: "AssignRole",
+			Handler:    _Auth_AssignRole_Handler,
+		},
+		{
+			MethodName: "Test",
+			Handler:    _Auth_Test_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
