@@ -9,9 +9,17 @@ option go_package = "github.com/Wolkodaf/protos/gen/go/auth;auth";
 service Auth {
     rpc Register(RegisterRequest) returns (RegisterResponse);
     rpc Login(LoginRequest) returns (LoginResponse);
-    rpc GetNewTokens(TokensRequest) returns (TokenResponce);
+    rpc GetNewTokens(TokensRequest) returns (TokenResponse);
+
+    // Профиль пользователя
+    rpc GetProfile(GetProfileRequest) returns (GetProfileResponse);
+
+    // Админские ручки
+    rpc ListPendingUsers(ListPendingUsersRequest) returns (ListPendingUsersResponse);
+    rpc AssignRole(AssignRoleRequest) returns (AssignRoleResponse);
 }
 
+// --- AUTH MESSAGES ---
 message RegisterRequest {
     string username = 1;
     string email = 2;
@@ -19,8 +27,7 @@ message RegisterRequest {
 }
 
 message RegisterResponse {
-    int64 user_id= 1;
-    string error = 2;
+    int64 user_id = 1;
 }
 
 message LoginRequest {
@@ -36,7 +43,48 @@ message LoginResponse {
 message TokensRequest {
     string refresh_token = 1;
 }
-message TokenResponce {
+
+message TokenResponse {
     string access_token = 1;
     string refresh_token = 2;
+}
+
+// --- PROFILE MESSAGES ---
+message GetProfileRequest {
+    int64 user_id = 1;
+}
+
+message GetProfileResponse {
+    int64 user_id = 1;
+    string username = 2;
+    string email = 3;
+    string role = 4;
+}
+
+// --- ADMIN MESSAGES ---
+message ListPendingUsersRequest {
+    // пагинация
+    int32 limit = 1;
+    int32 offset = 2;
+}
+
+message PendingUser {
+    int64 user_id = 1;
+    string username = 2;
+    string email = 3;
+    string created_at = 4;
+}
+
+message ListPendingUsersResponse {
+    repeated PendingUser users = 1;
+    int32 total_count = 2; // кол-во страниц
+}
+
+message AssignRoleRequest {
+    int64 target_user_id = 1; // Кому выдаем
+    string new_role = 2;    // Какую роль выдаем
+}
+
+message AssignRoleResponse {
+    bool success = 1;
 }
