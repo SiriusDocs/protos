@@ -2,8 +2,7 @@ syntax = "proto3";
 
 package file_service;
 
-option go_package = "github.com/yourorg/sirius_docs/proto/file_service;file_service";
-
+option go_package = "github.com/yourorg/sirius_docs/proto/files;files";
 import "google/protobuf/empty.proto";
 
 service FileService {

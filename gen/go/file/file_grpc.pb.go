@@ -4,7 +4,7 @@
 // - protoc             v6.33.1
 // source: file/file.proto
 
-package file_service
+package files
 
 import (
 	context "context"

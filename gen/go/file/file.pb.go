@@ -4,7 +4,7 @@
 // 	protoc        v6.33.1
 // source: file/file.proto
 
-package file_service
+package files
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -839,7 +839,7 @@ const file_file_file_proto_rawDesc = "" +
 	"\fCreateBucket\x12!.file_service.CreateBucketRequest\x1a\x16.google.protobuf.Empty\x12E\n" +
 	"\n" +
 	"DeleteFile\x12\x1f.file_service.DeleteFileRequest\x1a\x16.google.protobuf.Empty\x12L\n" +
-	"\tListFiles\x12\x1e.file_service.ListFilesRequest\x1a\x1f.file_service.ListFilesResponseB@Z>github.com/yourorg/sirius_docs/proto/file_service;file_serviceb\x06proto3"
+	"\tListFiles\x12\x1e.file_service.ListFilesRequest\x1a\x1f.file_service.ListFilesResponseB2Z0github.com/yourorg/sirius_docs/proto/files;filesb\x06proto3"
 
 var (
 	file_file_file_proto_rawDescOnce sync.Once
