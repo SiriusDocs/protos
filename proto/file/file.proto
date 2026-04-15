@@ -2,17 +2,17 @@ syntax = "proto3";
 
 package file;
 
-option go_package = "github.com/wolkodaf/SiriusDOCS/protos/gen/go/file";
+option go_package = "github.com/SiriusDocs/protos/gen/go/file;file";
 
-service FileService {
+service File {
     // Upload a file via streaming
-    rpc UploadFile(stream UploadFileRequest) returns (UploadFileResponse) {}
+    rpc UploadFile(stream UploadFileRequest) returns (UploadFileResponse);
 
     // Download a file via streaming
-    rpc DownloadFile(DownloadFileRequest) returns (stream DownloadFileResponse) {}
+    rpc DownloadFile(DownloadFileRequest) returns (stream DownloadFileResponse);
 
     // Get upload progress percentage
-    rpc GetProgress(GetProgressRequest) returns (GetProgressResponse) {}
+    rpc GetProgress(GetProgressRequest) returns (GetProgressResponse);
 }
 
 message UploadFileRequest {
@@ -24,10 +24,9 @@ message UploadFileRequest {
 
 message FileInfo {
     string filename = 1;
-    string file_type = 2;
+    string content_type = 2;
     string bucket = 3;
-    string upload_id = 4; // Used to track progress if needed
-    int64 total_size = 5; // Expected size in bytes
+    int64 total_size = 4;
 }
 
 message UploadFileResponse {

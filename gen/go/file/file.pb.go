@@ -106,10 +106,9 @@ func (*UploadFileRequest_ChunkData) isUploadFileRequest_Data() {}
 type FileInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Filename      string                 `protobuf:"bytes,1,opt,name=filename,proto3" json:"filename,omitempty"`
-	FileType      string                 `protobuf:"bytes,2,opt,name=file_type,json=fileType,proto3" json:"file_type,omitempty"`
+	ContentType   string                 `protobuf:"bytes,2,opt,name=content_type,json=contentType,proto3" json:"content_type,omitempty"`
 	Bucket        string                 `protobuf:"bytes,3,opt,name=bucket,proto3" json:"bucket,omitempty"`
-	UploadId      string                 `protobuf:"bytes,4,opt,name=upload_id,json=uploadId,proto3" json:"upload_id,omitempty"`     // Used to track progress if needed
-	TotalSize     int64                  `protobuf:"varint,5,opt,name=total_size,json=totalSize,proto3" json:"total_size,omitempty"` // Expected size in bytes
+	TotalSize     int64                  `protobuf:"varint,4,opt,name=total_size,json=totalSize,proto3" json:"total_size,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -151,9 +150,9 @@ func (x *FileInfo) GetFilename() string {
 	return ""
 }
 
-func (x *FileInfo) GetFileType() string {
+func (x *FileInfo) GetContentType() string {
 	if x != nil {
-		return x.FileType
+		return x.ContentType
 	}
 	return ""
 }
@@ -161,13 +160,6 @@ func (x *FileInfo) GetFileType() string {
 func (x *FileInfo) GetBucket() string {
 	if x != nil {
 		return x.Bucket
-	}
-	return ""
-}
-
-func (x *FileInfo) GetUploadId() string {
-	if x != nil {
-		return x.UploadId
 	}
 	return ""
 }
@@ -432,14 +424,13 @@ const file_file_file_proto_rawDesc = "" +
 	"\x04info\x18\x01 \x01(\v2\x0e.file.FileInfoH\x00R\x04info\x12\x1f\n" +
 	"\n" +
 	"chunk_data\x18\x02 \x01(\fH\x00R\tchunkDataB\x06\n" +
-	"\x04data\"\x97\x01\n" +
+	"\x04data\"\x80\x01\n" +
 	"\bFileInfo\x12\x1a\n" +
-	"\bfilename\x18\x01 \x01(\tR\bfilename\x12\x1b\n" +
-	"\tfile_type\x18\x02 \x01(\tR\bfileType\x12\x16\n" +
-	"\x06bucket\x18\x03 \x01(\tR\x06bucket\x12\x1b\n" +
-	"\tupload_id\x18\x04 \x01(\tR\buploadId\x12\x1d\n" +
+	"\bfilename\x18\x01 \x01(\tR\bfilename\x12!\n" +
+	"\fcontent_type\x18\x02 \x01(\tR\vcontentType\x12\x16\n" +
+	"\x06bucket\x18\x03 \x01(\tR\x06bucket\x12\x1d\n" +
 	"\n" +
-	"total_size\x18\x05 \x01(\x03R\ttotalSize\"a\n" +
+	"total_size\x18\x04 \x01(\x03R\ttotalSize\"a\n" +
 	"\x12UploadFileResponse\x12\x17\n" +
 	"\afile_id\x18\x01 \x01(\tR\x06fileId\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\x12\x18\n" +
@@ -455,12 +446,12 @@ const file_file_file_proto_rawDesc = "" +
 	"\x13GetProgressResponse\x12\x1e\n" +
 	"\n" +
 	"percentage\x18\x01 \x01(\x05R\n" +
-	"percentage2\xe3\x01\n" +
-	"\vFileService\x12C\n" +
+	"percentage2\xd6\x01\n" +
+	"\x04File\x12A\n" +
 	"\n" +
-	"UploadFile\x12\x17.file.UploadFileRequest\x1a\x18.file.UploadFileResponse\"\x00(\x01\x12I\n" +
-	"\fDownloadFile\x12\x19.file.DownloadFileRequest\x1a\x1a.file.DownloadFileResponse\"\x000\x01\x12D\n" +
-	"\vGetProgress\x12\x18.file.GetProgressRequest\x1a\x19.file.GetProgressResponse\"\x00B3Z1github.com/wolkodaf/SiriusDOCS/protos/gen/go/fileb\x06proto3"
+	"UploadFile\x12\x17.file.UploadFileRequest\x1a\x18.file.UploadFileResponse(\x01\x12G\n" +
+	"\fDownloadFile\x12\x19.file.DownloadFileRequest\x1a\x1a.file.DownloadFileResponse0\x01\x12B\n" +
+	"\vGetProgress\x12\x18.file.GetProgressRequest\x1a\x19.file.GetProgressResponseB/Z-github.com/SiriusDocs/protos/gen/go/file;fileb\x06proto3"
 
 var (
 	file_file_file_proto_rawDescOnce sync.Once
@@ -486,12 +477,12 @@ var file_file_file_proto_goTypes = []any{
 }
 var file_file_file_proto_depIdxs = []int32{
 	1, // 0: file.UploadFileRequest.info:type_name -> file.FileInfo
-	0, // 1: file.FileService.UploadFile:input_type -> file.UploadFileRequest
-	3, // 2: file.FileService.DownloadFile:input_type -> file.DownloadFileRequest
-	5, // 3: file.FileService.GetProgress:input_type -> file.GetProgressRequest
-	2, // 4: file.FileService.UploadFile:output_type -> file.UploadFileResponse
-	4, // 5: file.FileService.DownloadFile:output_type -> file.DownloadFileResponse
-	6, // 6: file.FileService.GetProgress:output_type -> file.GetProgressResponse
+	0, // 1: file.File.UploadFile:input_type -> file.UploadFileRequest
+	3, // 2: file.File.DownloadFile:input_type -> file.DownloadFileRequest
+	5, // 3: file.File.GetProgress:input_type -> file.GetProgressRequest
+	2, // 4: file.File.UploadFile:output_type -> file.UploadFileResponse
+	4, // 5: file.File.DownloadFile:output_type -> file.DownloadFileResponse
+	6, // 6: file.File.GetProgress:output_type -> file.GetProgressResponse
 	4, // [4:7] is the sub-list for method output_type
 	1, // [1:4] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
