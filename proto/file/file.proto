@@ -1,53 +1,121 @@
 syntax = "proto3";
 
-package file;
+package file_service;
 
-option go_package = "github.com/SiriusDocs/protos/gen/go/file;file";
+option go_package = "github.com/yourorg/sirius_docs/proto/file_service;file_service";
 
-service File {
-    // Upload a file via streaming
-    rpc UploadFile(stream UploadFileRequest) returns (UploadFileResponse);
+import "google/protobuf/empty.proto";
 
-    // Download a file via streaming
-    rpc DownloadFile(DownloadFileRequest) returns (stream DownloadFileResponse);
+service FileService {
+  // === Upload ===
+  rpc UploadFile(stream UploadFileRequest) returns (UploadFileResponse);
 
-    // Get upload progress percentage
-    rpc GetProgress(GetProgressRequest) returns (GetProgressResponse);
+  // === Download ===
+  rpc DownloadFile(DownloadFileRequest) returns (stream DownloadFileResponse);
+
+  // === Progress ===
+  rpc GetUploadStatus(GetUploadStatusRequest) returns (GetUploadStatusResponse);
+
+  // === File Info ===
+  rpc GetFileMeta(GetFileMetaRequest) returns (FileMeta);
+
+  // === Admin ===
+  rpc CreateBucket(CreateBucketRequest) returns (google.protobuf.Empty);
+  rpc DeleteFile(DeleteFileRequest) returns (google.protobuf.Empty);
+  rpc ListFiles(ListFilesRequest) returns (ListFilesResponse);
 }
+
+// =======================
+// Upload
+// =======================
 
 message UploadFileRequest {
-    oneof data {
-        FileInfo info = 1;
-        bytes chunk_data = 2;
-    }
+  oneof data {
+    UploadMeta meta = 1;
+    FileChunk chunk = 2;
+  }
 }
 
-message FileInfo {
-    string filename = 1;
-    string content_type = 2;
-    string bucket = 3;
-    int64 total_size = 4;
+message UploadMeta {
+  string filename = 1;
+  string content_type = 2;
+  int64 size = 3;
+
+  string bucket = 4;
+
+  string user_id = 5;
+  repeated string roles = 6;
+}
+
+message FileChunk {
+  bytes content = 1;
 }
 
 message UploadFileResponse {
-    string file_id = 1;
-    string message = 2;
-    bool success = 3;
+  string file_id = 1;
+  string upload_id = 2;
 }
 
+// =======================
+// Download
+// =======================
+
 message DownloadFileRequest {
-    string file_id = 1;
-    string bucket = 2;
+  string file_id = 1;
+
+  string user_id = 2;
+  repeated string roles = 3;
 }
 
 message DownloadFileResponse {
-    bytes chunk_data = 1;
+  bytes chunk = 1;
 }
 
-message GetProgressRequest {
-    string upload_id = 1;
+// =======================
+// Progress
+// =======================
+
+message GetUploadStatusRequest {
+  string upload_id = 1;
 }
 
-message GetProgressResponse {
-    int32 percentage = 1;
+message GetUploadStatusResponse {
+  int32 progress_percent = 1;
+  bool completed = 2;
+}
+
+// =======================
+// File Meta
+// =======================
+
+message GetFileMetaRequest {
+  string file_id = 1;
+}
+
+message FileMeta {
+  string file_id = 1;
+  string filename = 2;
+  string content_type = 3;
+  int64 size = 4;
+  string bucket = 5;
+}
+
+// =======================
+// Admin
+// =======================
+
+message CreateBucketRequest {
+  string bucket_name = 1;
+}
+
+message DeleteFileRequest {
+  string file_id = 1;
+}
+
+message ListFilesRequest {
+  string bucket = 1;
+}
+
+message ListFilesResponse {
+  repeated FileMeta files = 1;
 }
