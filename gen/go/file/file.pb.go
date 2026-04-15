@@ -829,8 +829,8 @@ const file_file_file_proto_rawDesc = "" +
 	"\x10ListFilesRequest\x12\x16\n" +
 	"\x06bucket\x18\x01 \x01(\tR\x06bucket\"A\n" +
 	"\x11ListFilesResponse\x12,\n" +
-	"\x05files\x18\x01 \x03(\v2\x16.file_service.FileMetaR\x05files2\xc2\x04\n" +
-	"\vFileService\x12Q\n" +
+	"\x05files\x18\x01 \x03(\v2\x16.file_service.FileMetaR\x05files2\xbb\x04\n" +
+	"\x04File\x12Q\n" +
 	"\n" +
 	"UploadFile\x12\x1f.file_service.UploadFileRequest\x1a .file_service.UploadFileResponse(\x01\x12W\n" +
 	"\fDownloadFile\x12!.file_service.DownloadFileRequest\x1a\".file_service.DownloadFileResponse0\x01\x12^\n" +
@@ -875,20 +875,20 @@ var file_file_file_proto_depIdxs = []int32{
 	1,  // 0: file_service.UploadFileRequest.meta:type_name -> file_service.UploadMeta
 	2,  // 1: file_service.UploadFileRequest.chunk:type_name -> file_service.FileChunk
 	9,  // 2: file_service.ListFilesResponse.files:type_name -> file_service.FileMeta
-	0,  // 3: file_service.FileService.UploadFile:input_type -> file_service.UploadFileRequest
-	4,  // 4: file_service.FileService.DownloadFile:input_type -> file_service.DownloadFileRequest
-	6,  // 5: file_service.FileService.GetUploadStatus:input_type -> file_service.GetUploadStatusRequest
-	8,  // 6: file_service.FileService.GetFileMeta:input_type -> file_service.GetFileMetaRequest
-	10, // 7: file_service.FileService.CreateBucket:input_type -> file_service.CreateBucketRequest
-	11, // 8: file_service.FileService.DeleteFile:input_type -> file_service.DeleteFileRequest
-	12, // 9: file_service.FileService.ListFiles:input_type -> file_service.ListFilesRequest
-	3,  // 10: file_service.FileService.UploadFile:output_type -> file_service.UploadFileResponse
-	5,  // 11: file_service.FileService.DownloadFile:output_type -> file_service.DownloadFileResponse
-	7,  // 12: file_service.FileService.GetUploadStatus:output_type -> file_service.GetUploadStatusResponse
-	9,  // 13: file_service.FileService.GetFileMeta:output_type -> file_service.FileMeta
-	14, // 14: file_service.FileService.CreateBucket:output_type -> google.protobuf.Empty
-	14, // 15: file_service.FileService.DeleteFile:output_type -> google.protobuf.Empty
-	13, // 16: file_service.FileService.ListFiles:output_type -> file_service.ListFilesResponse
+	0,  // 3: file_service.File.UploadFile:input_type -> file_service.UploadFileRequest
+	4,  // 4: file_service.File.DownloadFile:input_type -> file_service.DownloadFileRequest
+	6,  // 5: file_service.File.GetUploadStatus:input_type -> file_service.GetUploadStatusRequest
+	8,  // 6: file_service.File.GetFileMeta:input_type -> file_service.GetFileMetaRequest
+	10, // 7: file_service.File.CreateBucket:input_type -> file_service.CreateBucketRequest
+	11, // 8: file_service.File.DeleteFile:input_type -> file_service.DeleteFileRequest
+	12, // 9: file_service.File.ListFiles:input_type -> file_service.ListFilesRequest
+	3,  // 10: file_service.File.UploadFile:output_type -> file_service.UploadFileResponse
+	5,  // 11: file_service.File.DownloadFile:output_type -> file_service.DownloadFileResponse
+	7,  // 12: file_service.File.GetUploadStatus:output_type -> file_service.GetUploadStatusResponse
+	9,  // 13: file_service.File.GetFileMeta:output_type -> file_service.FileMeta
+	14, // 14: file_service.File.CreateBucket:output_type -> google.protobuf.Empty
+	14, // 15: file_service.File.DeleteFile:output_type -> google.protobuf.Empty
+	13, // 16: file_service.File.ListFiles:output_type -> file_service.ListFilesResponse
 	10, // [10:17] is the sub-list for method output_type
 	3,  // [3:10] is the sub-list for method input_type
 	3,  // [3:3] is the sub-list for extension type_name

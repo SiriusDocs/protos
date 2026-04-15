@@ -5,7 +5,7 @@ package file_service;
 option go_package = "github.com/yourorg/sirius_docs/proto/files;files";
 import "google/protobuf/empty.proto";
 
-service FileService {
+service File {
   // === Upload ===
   rpc UploadFile(stream UploadFileRequest) returns (UploadFileResponse);
 
