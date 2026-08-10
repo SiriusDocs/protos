@@ -2,52 +2,76 @@ syntax = "proto3";
 
 package file;
 
-option go_package = "github.com/SiriusDocs/protos/gen/go/file;file";
+// Указываем правильный путь для кодогенерации согласно структуре репозитория
+option go_package = "github.com/SiriusDocs/protos/gen/go/file";
 
-service File {
-    // Upload a file via streaming
-    rpc UploadFile(stream UploadFileRequest) returns (UploadFileResponse);
+service FileService {
+  // Генерация Presigned URL для скачивания файла (GET)
+  rpc GenerateDownloadURL (GenerateDownloadURLRequest) returns (GenerateDownloadURLResponse);
+  
+  // Генерация Presigned URL для прямой загрузки файла клиентом в S3 (PUT)
+  rpc GenerateUploadURL (GenerateUploadURLRequest) returns (GenerateUploadURLResponse);
+  
+  // Получение метаданных файла (проверка существования, размер)
+  rpc GetFileMetadata (GetFileMetadataRequest) returns (GetFileMetadataResponse);
+  
+  // Удаление файла из хранилища
+  rpc DeleteFile (DeleteFileRequest) returns (DeleteFileResponse);
 
-    // Download a file via streaming
-    rpc DownloadFile(DownloadFileRequest) returns (stream DownloadFileResponse);
-
-    // Get upload progress percentage
-    rpc GetProgress(GetProgressRequest) returns (GetProgressResponse);
+  // Копирование/перемещение файла внутри S3 (без скачивания в память)
+  rpc CopyFile (CopyFileRequest) returns (CopyFileResponse);
 }
 
-message UploadFileRequest {
-    oneof data {
-        FileInfo info = 1;
-        bytes chunk_data = 2;
-    }
+message GenerateDownloadURLRequest {
+  string bucket = 1;
+  string object_key = 2; // Уникальный путь к файлу в S3
+  int64 expiry_minutes = 3; // Время жизни ссылки
 }
 
-message FileInfo {
-    string filename = 1;
-    string content_type = 2;
-    string bucket = 3;
-    int64 total_size = 4;
+message GenerateDownloadURLResponse {
+  string url = 1;
 }
 
-message UploadFileResponse {
-    string file_id = 1;
-    string message = 2;
-    bool success = 3;
+message GenerateUploadURLRequest {
+  string bucket = 1;
+  string object_key = 2;
+  int64 expiry_minutes = 3;
+  string content_type = 4; // Ожидаемый MIME-тип (опционально)
 }
 
-message DownloadFileRequest {
-    string file_id = 1;
-    string bucket = 2;
+message GenerateUploadURLResponse {
+  string url = 1;
 }
 
-message DownloadFileResponse {
-    bytes chunk_data = 1;
+message GetFileMetadataRequest {
+  string bucket = 1;
+  string object_key = 2;
 }
 
-message GetProgressRequest {
-    string upload_id = 1;
+message GetFileMetadataResponse {
+  bool exists = 1;
+  int64 size_bytes = 2;
+  string content_type = 3;
+  string last_modified = 4;
 }
 
-message GetProgressResponse {
-    int32 percentage = 1;
+message DeleteFileRequest {
+  string bucket = 1;
+  string object_key = 2;
 }
+
+message DeleteFileResponse {
+  bool success = 1;
+}
+
+message CopyFileRequest {
+  string source_bucket = 1;
+  string source_object_key = 2;
+  string dest_bucket = 3;
+  string dest_object_key = 4;
+  bool delete_source = 5; // Если true, работает как Move (перемещение)
+}
+
+message CopyFileResponse {
+  bool success = 1;
+} 
