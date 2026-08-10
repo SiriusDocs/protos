@@ -19,11 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	FileService_GenerateDownloadURL_FullMethodName = "/file.FileService/GenerateDownloadURL"
-	FileService_GenerateUploadURL_FullMethodName   = "/file.FileService/GenerateUploadURL"
-	FileService_GetFileMetadata_FullMethodName     = "/file.FileService/GetFileMetadata"
-	FileService_DeleteFile_FullMethodName          = "/file.FileService/DeleteFile"
-	FileService_CopyFile_FullMethodName            = "/file.FileService/CopyFile"
+	FileService_GenerateDownloadURL_FullMethodName = "/file_service.FileService/GenerateDownloadURL"
+	FileService_GenerateUploadURL_FullMethodName   = "/file_service.FileService/GenerateUploadURL"
+	FileService_GetFileMetadata_FullMethodName     = "/file_service.FileService/GetFileMetadata"
+	FileService_DeleteFile_FullMethodName          = "/file_service.FileService/DeleteFile"
+	FileService_CopyFile_FullMethodName            = "/file_service.FileService/CopyFile"
 )
 
 // FileServiceClient is the client API for FileService service.
@@ -254,7 +254,7 @@ func _FileService_CopyFile_Handler(srv interface{}, ctx context.Context, dec fun
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var FileService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "file.FileService",
+	ServiceName: "file_service.FileService",
 	HandlerType: (*FileServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

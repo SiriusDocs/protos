@@ -577,7 +577,7 @@ var File_file_file_proto protoreflect.FileDescriptor
 
 const file_file_file_proto_rawDesc = "" +
 	"\n" +
-	"\x0ffile/file.proto\x12\x04file\"z\n" +
+	"\x0ffile/file.proto\x12\ffile_service\"z\n" +
 	"\x1aGenerateDownloadURLRequest\x12\x16\n" +
 	"\x06bucket\x18\x01 \x01(\tR\x06bucket\x12\x1d\n" +
 	"\n" +
@@ -617,14 +617,14 @@ const file_file_file_proto_rawDesc = "" +
 	"\x0fdest_object_key\x18\x04 \x01(\tR\rdestObjectKey\x12#\n" +
 	"\rdelete_source\x18\x05 \x01(\bR\fdeleteSource\",\n" +
 	"\x10CopyFileResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess2\x8b\x03\n" +
-	"\vFileService\x12Z\n" +
-	"\x13GenerateDownloadURL\x12 .file.GenerateDownloadURLRequest\x1a!.file.GenerateDownloadURLResponse\x12T\n" +
-	"\x11GenerateUploadURL\x12\x1e.file.GenerateUploadURLRequest\x1a\x1f.file.GenerateUploadURLResponse\x12N\n" +
-	"\x0fGetFileMetadata\x12\x1c.file.GetFileMetadataRequest\x1a\x1d.file.GetFileMetadataResponse\x12?\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess2\xdb\x03\n" +
+	"\vFileService\x12j\n" +
+	"\x13GenerateDownloadURL\x12(.file_service.GenerateDownloadURLRequest\x1a).file_service.GenerateDownloadURLResponse\x12d\n" +
+	"\x11GenerateUploadURL\x12&.file_service.GenerateUploadURLRequest\x1a'.file_service.GenerateUploadURLResponse\x12^\n" +
+	"\x0fGetFileMetadata\x12$.file_service.GetFileMetadataRequest\x1a%.file_service.GetFileMetadataResponse\x12O\n" +
 	"\n" +
-	"DeleteFile\x12\x17.file.DeleteFileRequest\x1a\x18.file.DeleteFileResponse\x129\n" +
-	"\bCopyFile\x12\x15.file.CopyFileRequest\x1a\x16.file.CopyFileResponseB*Z(github.com/SiriusDocs/protos/gen/go/fileb\x06proto3"
+	"DeleteFile\x12\x1f.file_service.DeleteFileRequest\x1a .file_service.DeleteFileResponse\x12I\n" +
+	"\bCopyFile\x12\x1d.file_service.CopyFileRequest\x1a\x1e.file_service.CopyFileResponseB*Z(github.com/SiriusDocs/protos/gen/go/fileb\x06proto3"
 
 var (
 	file_file_file_proto_rawDescOnce sync.Once
@@ -640,28 +640,28 @@ func file_file_file_proto_rawDescGZIP() []byte {
 
 var file_file_file_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_file_file_proto_goTypes = []any{
-	(*GenerateDownloadURLRequest)(nil),  // 0: file.GenerateDownloadURLRequest
-	(*GenerateDownloadURLResponse)(nil), // 1: file.GenerateDownloadURLResponse
-	(*GenerateUploadURLRequest)(nil),    // 2: file.GenerateUploadURLRequest
-	(*GenerateUploadURLResponse)(nil),   // 3: file.GenerateUploadURLResponse
-	(*GetFileMetadataRequest)(nil),      // 4: file.GetFileMetadataRequest
-	(*GetFileMetadataResponse)(nil),     // 5: file.GetFileMetadataResponse
-	(*DeleteFileRequest)(nil),           // 6: file.DeleteFileRequest
-	(*DeleteFileResponse)(nil),          // 7: file.DeleteFileResponse
-	(*CopyFileRequest)(nil),             // 8: file.CopyFileRequest
-	(*CopyFileResponse)(nil),            // 9: file.CopyFileResponse
+	(*GenerateDownloadURLRequest)(nil),  // 0: file_service.GenerateDownloadURLRequest
+	(*GenerateDownloadURLResponse)(nil), // 1: file_service.GenerateDownloadURLResponse
+	(*GenerateUploadURLRequest)(nil),    // 2: file_service.GenerateUploadURLRequest
+	(*GenerateUploadURLResponse)(nil),   // 3: file_service.GenerateUploadURLResponse
+	(*GetFileMetadataRequest)(nil),      // 4: file_service.GetFileMetadataRequest
+	(*GetFileMetadataResponse)(nil),     // 5: file_service.GetFileMetadataResponse
+	(*DeleteFileRequest)(nil),           // 6: file_service.DeleteFileRequest
+	(*DeleteFileResponse)(nil),          // 7: file_service.DeleteFileResponse
+	(*CopyFileRequest)(nil),             // 8: file_service.CopyFileRequest
+	(*CopyFileResponse)(nil),            // 9: file_service.CopyFileResponse
 }
 var file_file_file_proto_depIdxs = []int32{
-	0, // 0: file.FileService.GenerateDownloadURL:input_type -> file.GenerateDownloadURLRequest
-	2, // 1: file.FileService.GenerateUploadURL:input_type -> file.GenerateUploadURLRequest
-	4, // 2: file.FileService.GetFileMetadata:input_type -> file.GetFileMetadataRequest
-	6, // 3: file.FileService.DeleteFile:input_type -> file.DeleteFileRequest
-	8, // 4: file.FileService.CopyFile:input_type -> file.CopyFileRequest
-	1, // 5: file.FileService.GenerateDownloadURL:output_type -> file.GenerateDownloadURLResponse
-	3, // 6: file.FileService.GenerateUploadURL:output_type -> file.GenerateUploadURLResponse
-	5, // 7: file.FileService.GetFileMetadata:output_type -> file.GetFileMetadataResponse
-	7, // 8: file.FileService.DeleteFile:output_type -> file.DeleteFileResponse
-	9, // 9: file.FileService.CopyFile:output_type -> file.CopyFileResponse
+	0, // 0: file_service.FileService.GenerateDownloadURL:input_type -> file_service.GenerateDownloadURLRequest
+	2, // 1: file_service.FileService.GenerateUploadURL:input_type -> file_service.GenerateUploadURLRequest
+	4, // 2: file_service.FileService.GetFileMetadata:input_type -> file_service.GetFileMetadataRequest
+	6, // 3: file_service.FileService.DeleteFile:input_type -> file_service.DeleteFileRequest
+	8, // 4: file_service.FileService.CopyFile:input_type -> file_service.CopyFileRequest
+	1, // 5: file_service.FileService.GenerateDownloadURL:output_type -> file_service.GenerateDownloadURLResponse
+	3, // 6: file_service.FileService.GenerateUploadURL:output_type -> file_service.GenerateUploadURLResponse
+	5, // 7: file_service.FileService.GetFileMetadata:output_type -> file_service.GetFileMetadataResponse
+	7, // 8: file_service.FileService.DeleteFile:output_type -> file_service.DeleteFileResponse
+	9, // 9: file_service.FileService.CopyFile:output_type -> file_service.CopyFileResponse
 	5, // [5:10] is the sub-list for method output_type
 	0, // [0:5] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
