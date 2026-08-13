@@ -327,7 +327,6 @@ func (x *TokenResponse) GetRefreshToken() string {
 	return ""
 }
 
-// --- PROFILE MESSAGES ---
 type GetProfileRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserId        int64                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
@@ -377,7 +376,8 @@ type GetProfileResponse struct {
 	UserId        int64                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	Username      string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`
 	Email         string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
-	Role          string                 `protobuf:"bytes,4,opt,name=role,proto3" json:"role,omitempty"`
+	UserRole      string                 `protobuf:"bytes,4,opt,name=user_role,json=userRole,proto3" json:"user_role,omitempty"`
+	AvatarUrl     string                 `protobuf:"bytes,5,opt,name=avatar_url,json=avatarUrl,proto3" json:"avatar_url,omitempty"` // Presigned GET ссылка на аватарку
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -433,9 +433,208 @@ func (x *GetProfileResponse) GetEmail() string {
 	return ""
 }
 
-func (x *GetProfileResponse) GetRole() string {
+func (x *GetProfileResponse) GetUserRole() string {
 	if x != nil {
-		return x.Role
+		return x.UserRole
+	}
+	return ""
+}
+
+func (x *GetProfileResponse) GetAvatarUrl() string {
+	if x != nil {
+		return x.AvatarUrl
+	}
+	return ""
+}
+
+type GetAvatarRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        int64                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetAvatarRequest) Reset() {
+	*x = GetAvatarRequest{}
+	mi := &file_auth_auth_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetAvatarRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetAvatarRequest) ProtoMessage() {}
+
+func (x *GetAvatarRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_auth_auth_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetAvatarRequest.ProtoReflect.Descriptor instead.
+func (*GetAvatarRequest) Descriptor() ([]byte, []int) {
+	return file_auth_auth_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *GetAvatarRequest) GetUserId() int64 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+type GetAvatarResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AvatarUrl     string                 `protobuf:"bytes,1,opt,name=avatar_url,json=avatarUrl,proto3" json:"avatar_url,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetAvatarResponse) Reset() {
+	*x = GetAvatarResponse{}
+	mi := &file_auth_auth_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetAvatarResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetAvatarResponse) ProtoMessage() {}
+
+func (x *GetAvatarResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_auth_auth_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetAvatarResponse.ProtoReflect.Descriptor instead.
+func (*GetAvatarResponse) Descriptor() ([]byte, []int) {
+	return file_auth_auth_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *GetAvatarResponse) GetAvatarUrl() string {
+	if x != nil {
+		return x.AvatarUrl
+	}
+	return ""
+}
+
+type GenerateAvatarUploadUrlRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        int64                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	ContentType   string                 `protobuf:"bytes,2,opt,name=content_type,json=contentType,proto3" json:"content_type,omitempty"` // e.g. "image/png", "image/jpeg"
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GenerateAvatarUploadUrlRequest) Reset() {
+	*x = GenerateAvatarUploadUrlRequest{}
+	mi := &file_auth_auth_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GenerateAvatarUploadUrlRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GenerateAvatarUploadUrlRequest) ProtoMessage() {}
+
+func (x *GenerateAvatarUploadUrlRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_auth_auth_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GenerateAvatarUploadUrlRequest.ProtoReflect.Descriptor instead.
+func (*GenerateAvatarUploadUrlRequest) Descriptor() ([]byte, []int) {
+	return file_auth_auth_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *GenerateAvatarUploadUrlRequest) GetUserId() int64 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *GenerateAvatarUploadUrlRequest) GetContentType() string {
+	if x != nil {
+		return x.ContentType
+	}
+	return ""
+}
+
+type GenerateAvatarUploadUrlResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UploadUrl     string                 `protobuf:"bytes,1,opt,name=upload_url,json=uploadUrl,proto3" json:"upload_url,omitempty"` // Presigned PUT ссылка для загрузки в S3
+	AvatarKey     string                 `protobuf:"bytes,2,opt,name=avatar_key,json=avatarKey,proto3" json:"avatar_key,omitempty"` // Ключ файла в S3
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GenerateAvatarUploadUrlResponse) Reset() {
+	*x = GenerateAvatarUploadUrlResponse{}
+	mi := &file_auth_auth_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GenerateAvatarUploadUrlResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GenerateAvatarUploadUrlResponse) ProtoMessage() {}
+
+func (x *GenerateAvatarUploadUrlResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_auth_auth_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GenerateAvatarUploadUrlResponse.ProtoReflect.Descriptor instead.
+func (*GenerateAvatarUploadUrlResponse) Descriptor() ([]byte, []int) {
+	return file_auth_auth_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *GenerateAvatarUploadUrlResponse) GetUploadUrl() string {
+	if x != nil {
+		return x.UploadUrl
+	}
+	return ""
+}
+
+func (x *GenerateAvatarUploadUrlResponse) GetAvatarKey() string {
+	if x != nil {
+		return x.AvatarKey
 	}
 	return ""
 }
@@ -452,7 +651,7 @@ type ListPendingUsersRequest struct {
 
 func (x *ListPendingUsersRequest) Reset() {
 	*x = ListPendingUsersRequest{}
-	mi := &file_auth_auth_proto_msgTypes[8]
+	mi := &file_auth_auth_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -464,7 +663,7 @@ func (x *ListPendingUsersRequest) String() string {
 func (*ListPendingUsersRequest) ProtoMessage() {}
 
 func (x *ListPendingUsersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_auth_proto_msgTypes[8]
+	mi := &file_auth_auth_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -477,7 +676,7 @@ func (x *ListPendingUsersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListPendingUsersRequest.ProtoReflect.Descriptor instead.
 func (*ListPendingUsersRequest) Descriptor() ([]byte, []int) {
-	return file_auth_auth_proto_rawDescGZIP(), []int{8}
+	return file_auth_auth_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *ListPendingUsersRequest) GetLimit() int32 {
@@ -506,7 +705,7 @@ type PendingUser struct {
 
 func (x *PendingUser) Reset() {
 	*x = PendingUser{}
-	mi := &file_auth_auth_proto_msgTypes[9]
+	mi := &file_auth_auth_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -518,7 +717,7 @@ func (x *PendingUser) String() string {
 func (*PendingUser) ProtoMessage() {}
 
 func (x *PendingUser) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_auth_proto_msgTypes[9]
+	mi := &file_auth_auth_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -531,7 +730,7 @@ func (x *PendingUser) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PendingUser.ProtoReflect.Descriptor instead.
 func (*PendingUser) Descriptor() ([]byte, []int) {
-	return file_auth_auth_proto_rawDescGZIP(), []int{9}
+	return file_auth_auth_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *PendingUser) GetUserId() int64 {
@@ -572,7 +771,7 @@ type ListPendingUsersResponse struct {
 
 func (x *ListPendingUsersResponse) Reset() {
 	*x = ListPendingUsersResponse{}
-	mi := &file_auth_auth_proto_msgTypes[10]
+	mi := &file_auth_auth_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -584,7 +783,7 @@ func (x *ListPendingUsersResponse) String() string {
 func (*ListPendingUsersResponse) ProtoMessage() {}
 
 func (x *ListPendingUsersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_auth_proto_msgTypes[10]
+	mi := &file_auth_auth_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -597,7 +796,7 @@ func (x *ListPendingUsersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListPendingUsersResponse.ProtoReflect.Descriptor instead.
 func (*ListPendingUsersResponse) Descriptor() ([]byte, []int) {
-	return file_auth_auth_proto_rawDescGZIP(), []int{10}
+	return file_auth_auth_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *ListPendingUsersResponse) GetUsers() []*PendingUser {
@@ -624,7 +823,7 @@ type AssignRoleRequest struct {
 
 func (x *AssignRoleRequest) Reset() {
 	*x = AssignRoleRequest{}
-	mi := &file_auth_auth_proto_msgTypes[11]
+	mi := &file_auth_auth_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -636,7 +835,7 @@ func (x *AssignRoleRequest) String() string {
 func (*AssignRoleRequest) ProtoMessage() {}
 
 func (x *AssignRoleRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_auth_proto_msgTypes[11]
+	mi := &file_auth_auth_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -649,7 +848,7 @@ func (x *AssignRoleRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AssignRoleRequest.ProtoReflect.Descriptor instead.
 func (*AssignRoleRequest) Descriptor() ([]byte, []int) {
-	return file_auth_auth_proto_rawDescGZIP(), []int{11}
+	return file_auth_auth_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *AssignRoleRequest) GetTargetUserId() int64 {
@@ -675,7 +874,7 @@ type AssignRoleResponse struct {
 
 func (x *AssignRoleResponse) Reset() {
 	*x = AssignRoleResponse{}
-	mi := &file_auth_auth_proto_msgTypes[12]
+	mi := &file_auth_auth_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -687,7 +886,7 @@ func (x *AssignRoleResponse) String() string {
 func (*AssignRoleResponse) ProtoMessage() {}
 
 func (x *AssignRoleResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_auth_proto_msgTypes[12]
+	mi := &file_auth_auth_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -700,7 +899,7 @@ func (x *AssignRoleResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AssignRoleResponse.ProtoReflect.Descriptor instead.
 func (*AssignRoleResponse) Descriptor() ([]byte, []int) {
-	return file_auth_auth_proto_rawDescGZIP(), []int{12}
+	return file_auth_auth_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *AssignRoleResponse) GetSuccess() bool {
@@ -733,12 +932,27 @@ const file_auth_auth_proto_rawDesc = "" +
 	"\faccess_token\x18\x01 \x01(\tR\vaccessToken\x12#\n" +
 	"\rrefresh_token\x18\x02 \x01(\tR\frefreshToken\",\n" +
 	"\x11GetProfileRequest\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\x03R\x06userId\"s\n" +
+	"\auser_id\x18\x01 \x01(\x03R\x06userId\"\x9b\x01\n" +
 	"\x12GetProfileResponse\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x14\n" +
-	"\x05email\x18\x03 \x01(\tR\x05email\x12\x12\n" +
-	"\x04role\x18\x04 \x01(\tR\x04role\"G\n" +
+	"\x05email\x18\x03 \x01(\tR\x05email\x12\x1b\n" +
+	"\tuser_role\x18\x04 \x01(\tR\buserRole\x12\x1d\n" +
+	"\n" +
+	"avatar_url\x18\x05 \x01(\tR\tavatarUrl\"+\n" +
+	"\x10GetAvatarRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\x03R\x06userId\"2\n" +
+	"\x11GetAvatarResponse\x12\x1d\n" +
+	"\n" +
+	"avatar_url\x18\x01 \x01(\tR\tavatarUrl\"\\\n" +
+	"\x1eGenerateAvatarUploadUrlRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12!\n" +
+	"\fcontent_type\x18\x02 \x01(\tR\vcontentType\"_\n" +
+	"\x1fGenerateAvatarUploadUrlResponse\x12\x1d\n" +
+	"\n" +
+	"upload_url\x18\x01 \x01(\tR\tuploadUrl\x12\x1d\n" +
+	"\n" +
+	"avatar_key\x18\x02 \x01(\tR\tavatarKey\"G\n" +
 	"\x17ListPendingUsersRequest\x12\x14\n" +
 	"\x05limit\x18\x01 \x01(\x05R\x05limit\x12\x16\n" +
 	"\x06offset\x18\x02 \x01(\x05R\x06offset\"w\n" +
@@ -756,13 +970,15 @@ const file_auth_auth_proto_rawDesc = "" +
 	"\x0etarget_user_id\x18\x01 \x01(\x03R\ftargetUserId\x12\x19\n" +
 	"\bnew_role\x18\x02 \x01(\tR\anewRole\".\n" +
 	"\x12AssignRoleResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess2\x82\x03\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess2\xa8\x04\n" +
 	"\x04Auth\x129\n" +
 	"\bRegister\x12\x15.auth.RegisterRequest\x1a\x16.auth.RegisterResponse\x120\n" +
 	"\x05Login\x12\x12.auth.LoginRequest\x1a\x13.auth.LoginResponse\x128\n" +
 	"\fGetNewTokens\x12\x13.auth.TokensRequest\x1a\x13.auth.TokenResponse\x12?\n" +
 	"\n" +
-	"GetProfile\x12\x17.auth.GetProfileRequest\x1a\x18.auth.GetProfileResponse\x12Q\n" +
+	"GetProfile\x12\x17.auth.GetProfileRequest\x1a\x18.auth.GetProfileResponse\x12<\n" +
+	"\tGetAvatar\x12\x16.auth.GetAvatarRequest\x1a\x17.auth.GetAvatarResponse\x12f\n" +
+	"\x17GenerateAvatarUploadUrl\x12$.auth.GenerateAvatarUploadUrlRequest\x1a%.auth.GenerateAvatarUploadUrlResponse\x12Q\n" +
 	"\x10ListPendingUsers\x12\x1d.auth.ListPendingUsersRequest\x1a\x1e.auth.ListPendingUsersResponse\x12?\n" +
 	"\n" +
 	"AssignRole\x12\x17.auth.AssignRoleRequest\x1a\x18.auth.AssignRoleResponseB-Z+github.com/Wolkodaf/protos/gen/go/auth;authb\x06proto3"
@@ -779,38 +995,46 @@ func file_auth_auth_proto_rawDescGZIP() []byte {
 	return file_auth_auth_proto_rawDescData
 }
 
-var file_auth_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
+var file_auth_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
 var file_auth_auth_proto_goTypes = []any{
-	(*RegisterRequest)(nil),          // 0: auth.RegisterRequest
-	(*RegisterResponse)(nil),         // 1: auth.RegisterResponse
-	(*LoginRequest)(nil),             // 2: auth.LoginRequest
-	(*LoginResponse)(nil),            // 3: auth.LoginResponse
-	(*TokensRequest)(nil),            // 4: auth.TokensRequest
-	(*TokenResponse)(nil),            // 5: auth.TokenResponse
-	(*GetProfileRequest)(nil),        // 6: auth.GetProfileRequest
-	(*GetProfileResponse)(nil),       // 7: auth.GetProfileResponse
-	(*ListPendingUsersRequest)(nil),  // 8: auth.ListPendingUsersRequest
-	(*PendingUser)(nil),              // 9: auth.PendingUser
-	(*ListPendingUsersResponse)(nil), // 10: auth.ListPendingUsersResponse
-	(*AssignRoleRequest)(nil),        // 11: auth.AssignRoleRequest
-	(*AssignRoleResponse)(nil),       // 12: auth.AssignRoleResponse
+	(*RegisterRequest)(nil),                 // 0: auth.RegisterRequest
+	(*RegisterResponse)(nil),                // 1: auth.RegisterResponse
+	(*LoginRequest)(nil),                    // 2: auth.LoginRequest
+	(*LoginResponse)(nil),                   // 3: auth.LoginResponse
+	(*TokensRequest)(nil),                   // 4: auth.TokensRequest
+	(*TokenResponse)(nil),                   // 5: auth.TokenResponse
+	(*GetProfileRequest)(nil),               // 6: auth.GetProfileRequest
+	(*GetProfileResponse)(nil),              // 7: auth.GetProfileResponse
+	(*GetAvatarRequest)(nil),                // 8: auth.GetAvatarRequest
+	(*GetAvatarResponse)(nil),               // 9: auth.GetAvatarResponse
+	(*GenerateAvatarUploadUrlRequest)(nil),  // 10: auth.GenerateAvatarUploadUrlRequest
+	(*GenerateAvatarUploadUrlResponse)(nil), // 11: auth.GenerateAvatarUploadUrlResponse
+	(*ListPendingUsersRequest)(nil),         // 12: auth.ListPendingUsersRequest
+	(*PendingUser)(nil),                     // 13: auth.PendingUser
+	(*ListPendingUsersResponse)(nil),        // 14: auth.ListPendingUsersResponse
+	(*AssignRoleRequest)(nil),               // 15: auth.AssignRoleRequest
+	(*AssignRoleResponse)(nil),              // 16: auth.AssignRoleResponse
 }
 var file_auth_auth_proto_depIdxs = []int32{
-	9,  // 0: auth.ListPendingUsersResponse.users:type_name -> auth.PendingUser
+	13, // 0: auth.ListPendingUsersResponse.users:type_name -> auth.PendingUser
 	0,  // 1: auth.Auth.Register:input_type -> auth.RegisterRequest
 	2,  // 2: auth.Auth.Login:input_type -> auth.LoginRequest
 	4,  // 3: auth.Auth.GetNewTokens:input_type -> auth.TokensRequest
 	6,  // 4: auth.Auth.GetProfile:input_type -> auth.GetProfileRequest
-	8,  // 5: auth.Auth.ListPendingUsers:input_type -> auth.ListPendingUsersRequest
-	11, // 6: auth.Auth.AssignRole:input_type -> auth.AssignRoleRequest
-	1,  // 7: auth.Auth.Register:output_type -> auth.RegisterResponse
-	3,  // 8: auth.Auth.Login:output_type -> auth.LoginResponse
-	5,  // 9: auth.Auth.GetNewTokens:output_type -> auth.TokenResponse
-	7,  // 10: auth.Auth.GetProfile:output_type -> auth.GetProfileResponse
-	10, // 11: auth.Auth.ListPendingUsers:output_type -> auth.ListPendingUsersResponse
-	12, // 12: auth.Auth.AssignRole:output_type -> auth.AssignRoleResponse
-	7,  // [7:13] is the sub-list for method output_type
-	1,  // [1:7] is the sub-list for method input_type
+	8,  // 5: auth.Auth.GetAvatar:input_type -> auth.GetAvatarRequest
+	10, // 6: auth.Auth.GenerateAvatarUploadUrl:input_type -> auth.GenerateAvatarUploadUrlRequest
+	12, // 7: auth.Auth.ListPendingUsers:input_type -> auth.ListPendingUsersRequest
+	15, // 8: auth.Auth.AssignRole:input_type -> auth.AssignRoleRequest
+	1,  // 9: auth.Auth.Register:output_type -> auth.RegisterResponse
+	3,  // 10: auth.Auth.Login:output_type -> auth.LoginResponse
+	5,  // 11: auth.Auth.GetNewTokens:output_type -> auth.TokenResponse
+	7,  // 12: auth.Auth.GetProfile:output_type -> auth.GetProfileResponse
+	9,  // 13: auth.Auth.GetAvatar:output_type -> auth.GetAvatarResponse
+	11, // 14: auth.Auth.GenerateAvatarUploadUrl:output_type -> auth.GenerateAvatarUploadUrlResponse
+	14, // 15: auth.Auth.ListPendingUsers:output_type -> auth.ListPendingUsersResponse
+	16, // 16: auth.Auth.AssignRole:output_type -> auth.AssignRoleResponse
+	9,  // [9:17] is the sub-list for method output_type
+	1,  // [1:9] is the sub-list for method input_type
 	1,  // [1:1] is the sub-list for extension type_name
 	1,  // [1:1] is the sub-list for extension extendee
 	0,  // [0:1] is the sub-list for field type_name
@@ -827,7 +1051,7 @@ func file_auth_auth_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_auth_auth_proto_rawDesc), len(file_auth_auth_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   13,
+			NumMessages:   17,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

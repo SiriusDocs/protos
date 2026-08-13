@@ -11,12 +11,16 @@ service Auth {
     rpc Login(LoginRequest) returns (LoginResponse);
     rpc GetNewTokens(TokensRequest) returns (TokenResponse);
 
-    // Профиль пользователя
+    // Профиль пользователя и Аватарка
     rpc GetProfile(GetProfileRequest) returns (GetProfileResponse);
+    rpc GetAvatar(GetAvatarRequest) returns (GetAvatarResponse);
+    rpc GenerateAvatarUploadUrl(GenerateAvatarUploadUrlRequest) returns (GenerateAvatarUploadUrlResponse);
 
     // Админские ручки
     rpc ListPendingUsers(ListPendingUsersRequest) returns (ListPendingUsersResponse);
     rpc AssignRole(AssignRoleRequest) returns (AssignRoleResponse);
+
+    // 
 }
 
 // --- AUTH MESSAGES ---
@@ -49,7 +53,6 @@ message TokenResponse {
     string refresh_token = 2;
 }
 
-// --- PROFILE MESSAGES ---
 message GetProfileRequest {
     int64 user_id = 1;
 }
@@ -58,7 +61,26 @@ message GetProfileResponse {
     int64 user_id = 1;
     string username = 2;
     string email = 3;
-    string role = 4;
+    string user_role = 4;
+    string avatar_url = 5; // Presigned GET ссылка на аватарку
+}
+
+message GetAvatarRequest {
+    int64 user_id = 1;
+}
+
+message GetAvatarResponse {
+    string avatar_url = 1;
+}
+
+message GenerateAvatarUploadUrlRequest {
+    int64 user_id = 1;
+    string content_type = 2; // e.g. "image/png", "image/jpeg"
+}
+
+message GenerateAvatarUploadUrlResponse {
+    string upload_url = 1;  // Presigned PUT ссылка для загрузки в S3
+    string avatar_key = 2;  // Ключ файла в S3
 }
 
 // --- ADMIN MESSAGES ---

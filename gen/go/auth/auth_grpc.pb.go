@@ -19,12 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Auth_Register_FullMethodName         = "/auth.Auth/Register"
-	Auth_Login_FullMethodName            = "/auth.Auth/Login"
-	Auth_GetNewTokens_FullMethodName     = "/auth.Auth/GetNewTokens"
-	Auth_GetProfile_FullMethodName       = "/auth.Auth/GetProfile"
-	Auth_ListPendingUsers_FullMethodName = "/auth.Auth/ListPendingUsers"
-	Auth_AssignRole_FullMethodName       = "/auth.Auth/AssignRole"
+	Auth_Register_FullMethodName                = "/auth.Auth/Register"
+	Auth_Login_FullMethodName                   = "/auth.Auth/Login"
+	Auth_GetNewTokens_FullMethodName            = "/auth.Auth/GetNewTokens"
+	Auth_GetProfile_FullMethodName              = "/auth.Auth/GetProfile"
+	Auth_GetAvatar_FullMethodName               = "/auth.Auth/GetAvatar"
+	Auth_GenerateAvatarUploadUrl_FullMethodName = "/auth.Auth/GenerateAvatarUploadUrl"
+	Auth_ListPendingUsers_FullMethodName        = "/auth.Auth/ListPendingUsers"
+	Auth_AssignRole_FullMethodName              = "/auth.Auth/AssignRole"
 )
 
 // AuthClient is the client API for Auth service.
@@ -34,8 +36,10 @@ type AuthClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	GetNewTokens(ctx context.Context, in *TokensRequest, opts ...grpc.CallOption) (*TokenResponse, error)
-	// Профиль пользователя
+	// Профиль пользователя и Аватарка
 	GetProfile(ctx context.Context, in *GetProfileRequest, opts ...grpc.CallOption) (*GetProfileResponse, error)
+	GetAvatar(ctx context.Context, in *GetAvatarRequest, opts ...grpc.CallOption) (*GetAvatarResponse, error)
+	GenerateAvatarUploadUrl(ctx context.Context, in *GenerateAvatarUploadUrlRequest, opts ...grpc.CallOption) (*GenerateAvatarUploadUrlResponse, error)
 	// Админские ручки
 	ListPendingUsers(ctx context.Context, in *ListPendingUsersRequest, opts ...grpc.CallOption) (*ListPendingUsersResponse, error)
 	AssignRole(ctx context.Context, in *AssignRoleRequest, opts ...grpc.CallOption) (*AssignRoleResponse, error)
@@ -89,6 +93,26 @@ func (c *authClient) GetProfile(ctx context.Context, in *GetProfileRequest, opts
 	return out, nil
 }
 
+func (c *authClient) GetAvatar(ctx context.Context, in *GetAvatarRequest, opts ...grpc.CallOption) (*GetAvatarResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetAvatarResponse)
+	err := c.cc.Invoke(ctx, Auth_GetAvatar_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authClient) GenerateAvatarUploadUrl(ctx context.Context, in *GenerateAvatarUploadUrlRequest, opts ...grpc.CallOption) (*GenerateAvatarUploadUrlResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GenerateAvatarUploadUrlResponse)
+	err := c.cc.Invoke(ctx, Auth_GenerateAvatarUploadUrl_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *authClient) ListPendingUsers(ctx context.Context, in *ListPendingUsersRequest, opts ...grpc.CallOption) (*ListPendingUsersResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListPendingUsersResponse)
@@ -116,8 +140,10 @@ type AuthServer interface {
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
 	GetNewTokens(context.Context, *TokensRequest) (*TokenResponse, error)
-	// Профиль пользователя
+	// Профиль пользователя и Аватарка
 	GetProfile(context.Context, *GetProfileRequest) (*GetProfileResponse, error)
+	GetAvatar(context.Context, *GetAvatarRequest) (*GetAvatarResponse, error)
+	GenerateAvatarUploadUrl(context.Context, *GenerateAvatarUploadUrlRequest) (*GenerateAvatarUploadUrlResponse, error)
 	// Админские ручки
 	ListPendingUsers(context.Context, *ListPendingUsersRequest) (*ListPendingUsersResponse, error)
 	AssignRole(context.Context, *AssignRoleRequest) (*AssignRoleResponse, error)
@@ -142,6 +168,12 @@ func (UnimplementedAuthServer) GetNewTokens(context.Context, *TokensRequest) (*T
 }
 func (UnimplementedAuthServer) GetProfile(context.Context, *GetProfileRequest) (*GetProfileResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetProfile not implemented")
+}
+func (UnimplementedAuthServer) GetAvatar(context.Context, *GetAvatarRequest) (*GetAvatarResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetAvatar not implemented")
+}
+func (UnimplementedAuthServer) GenerateAvatarUploadUrl(context.Context, *GenerateAvatarUploadUrlRequest) (*GenerateAvatarUploadUrlResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GenerateAvatarUploadUrl not implemented")
 }
 func (UnimplementedAuthServer) ListPendingUsers(context.Context, *ListPendingUsersRequest) (*ListPendingUsersResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListPendingUsers not implemented")
@@ -242,6 +274,42 @@ func _Auth_GetProfile_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Auth_GetAvatar_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAvatarRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServer).GetAvatar(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Auth_GetAvatar_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServer).GetAvatar(ctx, req.(*GetAvatarRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Auth_GenerateAvatarUploadUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GenerateAvatarUploadUrlRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServer).GenerateAvatarUploadUrl(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Auth_GenerateAvatarUploadUrl_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServer).GenerateAvatarUploadUrl(ctx, req.(*GenerateAvatarUploadUrlRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Auth_ListPendingUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListPendingUsersRequest)
 	if err := dec(in); err != nil {
@@ -300,6 +368,14 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetProfile",
 			Handler:    _Auth_GetProfile_Handler,
+		},
+		{
+			MethodName: "GetAvatar",
+			Handler:    _Auth_GetAvatar_Handler,
+		},
+		{
+			MethodName: "GenerateAvatarUploadUrl",
+			Handler:    _Auth_GenerateAvatarUploadUrl_Handler,
 		},
 		{
 			MethodName: "ListPendingUsers",
